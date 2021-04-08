@@ -11,7 +11,8 @@ export default function Form(props) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(rate, miles, chargeTime);
+          // console.log(rate, miles, chargeTime);
+          props.callback(rate, miles, chargeTime);
         }}
       >
         <label>What rate you currently on?</label>
