@@ -1,6 +1,7 @@
 import './App.css';
 import Form from './components/Form';
 import Results from './components/Results';
+import React, { useState } from 'react';
 
 const rateAPrice = 15 / 100;
 const rateBPriceRush = 20 / 100;
@@ -11,8 +12,18 @@ const preEVRateBNonRushHour = 6937.45;
 const EVkWhPerMile = 30 / 100;
 
 function App() {
+  const [b2RateA, setB2RateA] = useState(0);
+  const [b2RateB, setB2RateB] = useState(0);
+  const [impactRateA, setImpactRateA] = useState(0);
+  const [impactRateB, setImpactRateB] = useState(0);
+  const [selectedRate, setSelectedRate] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const callback = (rate, miles, chargeTime) => {
+    setIsSubmitted(true);
     miles = Number(miles);
+    setSelectedRate((selectedRate) => (selectedRate = rate));
+
     const b1RateA =
       Math.round((preEVRateA * rateAPrice + Number.EPSILON) * 100) / 100;
     const b1RateB =
@@ -22,12 +33,15 @@ function App() {
           Number.EPSILON) *
           100
       ) / 100;
+
     const EVElectricity = miles * EVkWhPerMile;
-    const b2RateA =
+
+    const curb2RateA =
       Math.round(
         ((preEVRateA + EVElectricity) * rateAPrice + Number.EPSILON) * 100
       ) / 100;
-    const b2RateB =
+    setB2RateA((b2RateA) => (b2RateA = curb2RateA));
+    const curb2RateB =
       Math.round(
         ((preEVRateBRushHour + (chargeTime === 'tou1' ? EVElectricity : 0)) *
           rateBPriceRush +
@@ -37,25 +51,32 @@ function App() {
           Number.EPSILON) *
           100
       ) / 100;
-    const impactRateA =
-      Math.round((b2RateA - b1RateA + Number.EPSILON) * 100) / 100;
-    const impactRateB =
-      Math.round((b2RateB - b1RateB + Number.EPSILON) * 100) / 100;
-    console.log(
-      b1RateA,
-      b1RateB,
-      miles,
-      b2RateA,
-      b2RateB,
-      impactRateA,
-      impactRateB
+    setB2RateB((b2RateB) => (b2RateB = curb2RateB));
+
+    setImpactRateA(
+      (impactRateA) =>
+        (impactRateA =
+          Math.round((curb2RateA - b1RateA + Number.EPSILON) * 100) / 100)
+    );
+    setImpactRateB(
+      (impactRateB) =>
+        (impactRateB =
+          Math.round((curb2RateB - b1RateB + Number.EPSILON) * 100) / 100)
     );
   };
+
   return (
     <div className="App">
       <body>
         <Form callback={callback} />
-        <Results />
+        <Results
+          impactRateA={impactRateA}
+          impactRateB={impactRateB}
+          b2RateA={b2RateA}
+          b2RateB={b2RateB}
+          isSubmitted={isSubmitted}
+          selectedRate={selectedRate}
+        />
       </body>
     </div>
   );

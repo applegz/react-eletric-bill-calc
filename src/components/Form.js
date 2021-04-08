@@ -6,8 +6,7 @@ export default function Form(props) {
   const [chargeTime, setChargeTime] = useState('tou1');
 
   return (
-    <div>
-      Form
+    <div className="container">
       <form
         onSubmit={(e) => {
           e.preventDefault();
