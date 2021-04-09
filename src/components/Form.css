@@ -1,0 +1,37 @@
+.container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+  padding: 50px 20px;
+  text-align: center;
+  max-width: 75%;
+  width: 800px;
+  margin: 10px;
+  display: grid;
+}
+
+label {
+  margin: 5px;
+  display: inline-block;
+}
+
+.btn {
+  display: block;
+  background-color: #9f68e0;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 35px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: auto;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus {
+  outline: 0;
+}

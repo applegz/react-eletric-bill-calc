@@ -3,13 +3,13 @@ import Form from './components/Form';
 import Results from './components/Results';
 import React, { useState } from 'react';
 
-const rateAPrice = 15 / 100;
-const rateBPriceRush = 20 / 100;
-const rateBPriceNonRush = 8 / 100;
+const rateAPrice = 0.15;
+const rateBPriceRush = 0.2;
+const rateBPriceNonRush = 0.08;
 const preEVRateA = 9003.71;
 const preEVRateBRushHour = 2066.26;
 const preEVRateBNonRushHour = 6937.45;
-const EVkWhPerMile = 30 / 100;
+const EVkWhPerMile = 0.3;
 
 function App() {
   const [b2RateA, setB2RateA] = useState(0);
@@ -24,15 +24,10 @@ function App() {
     miles = Number(miles);
     setSelectedRate((selectedRate) => (selectedRate = rate));
 
-    const b1RateA =
-      Math.round((preEVRateA * rateAPrice + Number.EPSILON) * 100) / 100;
+    const b1RateA = preEVRateA * rateAPrice;
     const b1RateB =
-      Math.round(
-        (preEVRateBRushHour * rateBPriceRush +
-          preEVRateBNonRushHour * rateBPriceNonRush +
-          Number.EPSILON) *
-          100
-      ) / 100;
+      preEVRateBRushHour * rateBPriceRush +
+      preEVRateBNonRushHour * rateBPriceNonRush;
 
     const EVElectricity = miles * EVkWhPerMile;
 

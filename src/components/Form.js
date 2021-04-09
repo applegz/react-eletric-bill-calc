@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Form.css';
 
 export default function Form(props) {
   const [rate, setRate] = useState('RateA');
@@ -10,7 +11,6 @@ export default function Form(props) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          // console.log(rate, miles, chargeTime);
           props.callback(rate, miles, chargeTime);
         }}
       >
@@ -35,7 +35,12 @@ export default function Form(props) {
           <option value="tou1">12 pm - 6 pm</option>
           <option value="tou2">any other time</option>
         </select>
-        <input type="submit" value="Submit" disabled={!miles}></input>
+        <input
+          type="submit"
+          value="Submit"
+          disabled={!miles}
+          className="btn"
+        ></input>
       </form>
     </div>
   );
